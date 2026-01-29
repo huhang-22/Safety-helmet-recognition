@@ -8,10 +8,10 @@ def main():
 
     results = model.train(
         data='E:/bishe/trained/data.yaml',  
-        epochs=30,              # 训练轮数
+        epochs=50,              # 训练轮数
         imgsz=640,              # 图像尺寸
         batch=8,                # 批大小
-        name='safety_detection_v2',  # 实验名称
+        name='safety_detection_v3',  # 实验名称
         patience=10,            # 早停耐心值
         save=True,              # 保存模型
         device=0            
