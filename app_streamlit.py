@@ -31,7 +31,6 @@ with st.sidebar:
         help="值越高，检测要求越严格"
     )
     
-    # 模型选择
     model_option = st.selectbox(
         "选择模型",
         ["最佳模型 (best.pt)", "最后模型 (last.pt)"]
@@ -67,7 +66,6 @@ with col1:
         # 检测按钮
         if st.button("开始检测", type="primary"):
             with st.spinner("检测中..."):
-                # 加载模型
                 model_path = 'runs/detect/safety_detection_v3/weights/best.pt'
                 model = YOLO(model_path)
                 
@@ -78,16 +76,13 @@ with col1:
                     save=False
                 )
                 
-                # 获取结果
                 result = results[0]
                 
-                # 绘制检测结果
                 result_img = result.plot()
                 
                 with col2:
                     st.header(" 检测结果")
                     
-                    # 显示结果图片
                     st.image(result_img, caption="检测结果", use_container_width=True)
                     
                     # 显示统计信息
@@ -95,31 +90,27 @@ with col1:
                         num_detections = len(result.boxes)
                         st.success(f" 检测到 {num_detections} 个目标")
                         
-                        # 统计各类别
                         class_counts = {}
                         for cls in result.boxes.cls:
                             class_id = int(cls)
                             class_name = result.names.get(class_id, f'类别{class_id}')
                             class_counts[class_name] = class_counts.get(class_name, 0) + 1
                         
-                        # 显示统计表格
                         st.subheader("检测统计")
                         for class_name, count in class_counts.items():
                             st.write(f"- **{class_name}**: {count}个")
-                        
-                        # 显示详细数据
+            
                         with st.expander("查看详细数据"):
                             st.write(f"图片尺寸: {result.orig_shape}")
                             st.write(f"推理时间: {results[0].speed['inference']:.2f}ms")
                     else:
                         st.warning("未检测到任何目标")
 
-# 添加示例图片
-with st.expander("查看示例图片"):
+with st.expander("查看示例图片"):          # 添加示例图片
     cols = st.columns(3)
     
     test_dir = "runs\detect\predict"
-    example_images = []  # 初始化列表
+    example_images = []  
     
     if os.path.exists(test_dir):
         # 获取测试集中的图片文件
@@ -128,7 +119,6 @@ with st.expander("查看示例图片"):
         test_images = image_files[:6]  # 取前6张图片文件
         example_images = [os.path.join(test_dir, img) for img in test_images]  # 使用正确的变量名
     
-    # 如果没有找到图片，显示提示
     if not example_images:
         st.info("测试集目录中没有找到图片文件。")
     
