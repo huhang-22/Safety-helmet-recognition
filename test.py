@@ -51,32 +51,32 @@ def main():
     #     else:
     #         print("警告：未找到保存的图片文件")
 
-    # if results and len(results) > 0:
-    #     print(f"\n 检测统计:")
-    #     total_detections = 0
-    #     for i, r in enumerate(results):
-    #         if hasattr(r, 'boxes') and r.boxes is not None:
-    #             num_detections = len(r.boxes)
-    #             total_detections += num_detections
-    #             print(f"  图片{i+1}: 检测到 {num_detections} 个目标")
+    if results and len(results) > 0:
+        print(f"\n 检测统计:")
+        total_detections = 0
+        for i, r in enumerate(results):
+            if hasattr(r, 'boxes') and r.boxes is not None:
+                num_detections = len(r.boxes)
+                total_detections += num_detections
+                print(f"  图片{i+1}: 检测到 {num_detections} 个目标")
         
-    #     print(f"  总计: {total_detections} 个检测目标")
+        print(f"  总计: {total_detections} 个检测目标")
 
-    #     if hasattr(results[0], 'names'):
-    #         class_names = results[0].names
-    #         class_counts = {}
+        if hasattr(results[0], 'names'):
+            class_names = results[0].names
+            class_counts = {}
             
-    #         for r in results:
-    #             if hasattr(r, 'boxes') and r.boxes is not None and len(r.boxes) > 0:
-    #                 for cls in r.boxes.cls:
-    #                     class_id = int(cls)
-    #                     class_name = class_names.get(class_id, f'class_{class_id}')
-    #                     class_counts[class_name] = class_counts.get(class_name, 0) + 1
+            for r in results:
+                if hasattr(r, 'boxes') and r.boxes is not None and len(r.boxes) > 0:
+                    for cls in r.boxes.cls:
+                        class_id = int(cls)
+                        class_name = class_names.get(class_id, f'class_{class_id}')
+                        class_counts[class_name] = class_counts.get(class_name, 0) + 1
             
-    #         if class_counts:
-    #             print(f"\n 类别分布:")
-    #             for class_name, count in class_counts.items():
-    #                 print(f"  {class_name}: {count} 个")
+            if class_counts:
+                print(f"\n 类别分布:")
+                for class_name, count in class_counts.items():
+                    print(f"  {class_name}: {count} 个")
 
 if __name__ == '__main__':
     main()
